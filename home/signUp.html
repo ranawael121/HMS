@@ -1,0 +1,266 @@
+<?php
+include("../home/php/PatientWrite.php");
+?>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Register</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet">
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="img/logo.png">
+    <style>
+           
+        .error
+    {
+      color: red;
+      size: 80%;
+      /*position: relative;*/
+      left: 37%;
+    }
+    /*.name_error{
+        color: red;
+      size: 80%;
+      position: relative;
+      left: 37%;
+    }   */
+     .erroremail{
+      color: red;
+      size: 80%;
+      /* position: relative;
+      left: 37%; */
+    }
+    .errorpass{
+      color: red;
+      size: 80%;
+      /*position: relative;*/
+      left: 37%;
+    }
+    .hidden
+    {
+      display:none;
+    }
+
+    .error-message {
+    display: none;
+    color: red;
+    }
+
+    input:invalid + .error-message {
+    display: block;
+    }
+    </style>
+</head>
+
+<body>
+
+
+
+    <!-- Navbar Start -->
+    <div class="container-fluid sticky-top bg-white shadow-sm">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
+                <a href="index.html" class="navbar-brand">
+                    <img src="./img/logo.png" alt=""> </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0">
+                        <a href="index.html" class="nav-item nav-link ">Home</a>
+                        <a href="about.html" class="nav-item nav-link">About</a>
+                       <!-- <a href="signUp.html" class="nav-item nav-link">SignUp</a>-->
+                        <a href="appointment.html" class="nav-item nav-link active">Appointment</a> 
+                        <a href="registedAppointment.html" class="nav-item nav-link">State Track</a>  
+   
+                        <!-- <a href="contact.html" class="nav-item nav-link">Contact</a> -->
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+   <!-- Navbar End -->
+   <?php if (isset($_GET['acesserror'])) { ?>
+    <div class="alert alert-danger" role="alert" style="text-align: center;">
+      <?=$_GET['acesserror']?>
+  </div>
+  <?php } ?>
+    <!-- sign up -->
+   
+    <div class="container bg-primary my-5 py-5" id="appointment">
+        <div class="container py-5">
+            <div class="row gx-5 justify-content-center">
+               <div class="col-lg-8 ">
+                    <div class="bg-white text-center rounded p-5">
+                        <h1 class="mb-4">Register</h1>
+                        <form action="" onsubmit ="return repatedPasword()" method="post">
+                            <div class="row g-3" >
+                                <div class="col-12 col-sm-2" id="label">
+                                    <label  class="col-sm-6 col-form-label" for="patientid" style="text-align: left; height: 55px; padding-top: 14px;" >National Id </label>
+
+                             </div>
+                                <div class="col-12 col-sm-9">
+                                 <input type="text" class="form-control bg-light border-0" id="NationalId" style="height: 55px;" name="nationalId"  id="NationalId" onchange="CheckID()"required >
+                                </div>
+                                <div id="id_error" class="error hidden" style="text-align: center;">Please enter a valid National ID</div>
+
+                                <div class="col-12 col-sm-2" id="label">
+                                    <label  class="col-sm-6 col-form-label" for="patientname" style="text-align: left; height: 55px; padding-top: 14px;" > Name</label>
+                                </div>
+                                <div class="col-12 col-sm-9">
+                                    <input type="text" class="form-control bg-light border-0"  style="height: 55px;" name="patientname" min="3" maxlength="30" id="nameInput" onchange="CheckName()" required >
+                                </div>
+                                <div id="name_error" class="error hidden" style="text-align: center;">Please enter a valid Name </div>
+
+                                <div class="col-12 col-sm-2" id="label">
+                                    <label  class="col-sm-6 col-form-label" for="patientname" style="text-align: left; height: 55px; padding-top: 14px;" >Email </label>
+                                </div>
+                                <div class="col-12 col-sm-9">
+                                    <input type="email" class="form-control bg-light border-0"  style="height: 55px;" name="Email" maxlength="40"  id="Email" onchange="CheckEmail()" required>
+                                </div>
+                                <div id="email_error" class="error hidden" style="text-align: center;">Please enter a valid email </div>
+
+                                <div class="col-12 col-sm-2" id="label">
+                                    <label  class="col-sm-6 col-form-label" for="patientname" style="text-align: left; height: 55px; padding-top: 14px;" > Password </label>
+                                </div>
+                                <div class="col-12 col-sm-9">
+                                    <input type="password" class="form-control bg-light border-0" style="height: 55px;" name="Password" maxlength="40"  id="Password" onchange="verifyPassword()" required>
+                                </div>
+                                <div id="password_error" class="error hidden" style="text-align: center;">Please enter a valid password </div>
+
+                                <div class="col-12 col-sm-2" id="label">
+                                    <label  class="col-sm-6 col-form-label" for="patientname" style="text-align: left; height: 55px; padding-top: 14px;" >Repeat Password </label>
+                                </div>
+                                <div class="col-12 col-sm-9">
+                                    <input type="password" class="form-control bg-light border-0"  style="height: 55px;" name="RepeatPassword" maxlength="40" id="RepeatPassword" onchange="repatedPasword()"required >
+                                </div>
+                                <div id="reppassword_error" class="error hidden" style="text-align: center;" >Passwords are not matched</div>
+
+                                <div class="col-12 col-sm-2" id="label">
+                                    <label  class="col-sm-6 col-form-label" for="patientname" style="text-align: left; height: 55px; padding-top: 14px;" >Birthdate </label>
+                                </div>
+                                <div class="col-12 col-sm-9">
+                                    <input type="date" class=" form-control bg-light border-0"  style="height: 55px;" name="birthDate" id="last_dental_visit" >
+                                </div>
+                                <div class="col-12 col-sm-2" id="label">
+                                    <label  class="col-sm-6 col-form-label" for="patientname" style="text-align: left; height: 55px; padding-top: 14px;" >Mobile </label>
+                                </div>
+                                <div class="col-12 col-sm-9">
+                                    <input type="text" class="form-control bg-light border-0"  style="height: 55px;" name="mobile" id="Mobile" onchange="CheckMobile()"required>
+                                   </div>
+                                   <div id="mobile_error" class="error hidden" style="text-align: center;" >Please enter a valid mobile</div>
+
+                                <div class="col-12 col-sm-2" id="label">
+                                    <label  class="col-sm-6 col-form-label" for="patientname" style="text-align: left; height: 55px; padding-top: 14px;" >Employee Code</label>
+                                </div>
+                                <div class="col-12 col-sm-9">
+                                    <input type="text" class="form-control bg-light border-0"  style="height: 55px;" name="employeeId"  id="employeeId"  >
+                                  </div>
+
+                                <div class="col-12 col-sm-2" id="label">
+                                    <label  class="col-sm-6 col-form-label" for="patientname" style="text-align: left; height: 55px; padding-top: 14px;" >Company </label>
+                                </div>
+                                <div class="col-12 col-sm-9">
+                                    <select class="form-control form-select bg-light border-0" style="height: 55px;" name="company" aria-label="Default select example" >
+                                        
+                                        <option value="a">Sugar Canel</option>
+                                        <option value="b">Vodafone</option>
+                                        <option value="c">WE</option>
+                                      </select>
+                                </div>
+                                <div div class="col-12 col-sm-2" id="label">
+                                    <label  class="col-sm-6 col-form-label" for="patientname" style="text-align: left; height: 55px; padding-top: 14px;" >Blood Type</label>
+                                </div>
+                                <div class="col-12 col-sm-9">
+                                  <select name="Blood" class="form-control form-select bg-light border-0" style="height: 55px;" aria-label="Default select example" required>                
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="AB">AB</option>
+                                    <option value="O">O</option>
+                                </select>
+                              </div>
+
+                                <div class="col-12 col-sm-2" id="label">
+                                    <label  class="col-sm-6 col-form-label" for="patientname" style="text-align: left; height: 55px; padding-top: 14px;" >Chronic Disease </label>
+                                </div>
+
+                                <div class="col-12 col-sm-9">
+                                    <input type="text" class="form-control bg-light border-0"  style="height: 55px;" name="ChronicDisease" >
+                                </div>
+
+                                <div class="col-12 col-sm-2" id="label">
+                                    <label  class="col-sm-6 col-form-label" for="patientname" style="text-align: left; height: 55px; padding-top: 14px;" >Past Surgery </label>
+                                </div>
+                                <div class="col-12 col-sm-9">
+                                    <input type="text" class="form-control bg-light border-0"  style="height: 55px;" name="PastSurger" >
+                                </div>
+
+                                <div class="col-12 col-sm-2" id="label">
+                                    <label  class="col-sm-6 col-form-label" for="patientname" style="text-align: left; height: 55px; padding-top: 14px;" >Address </label>
+                                </div>
+                                <div class="col-12 col-sm-2">
+                                    <input type="text" class="form-control bg-light border-0 col-6" placeholder="apartment" style="height: 55px;" name="apartment" id="apartment" >
+                                </div>
+                                <div class="col-12 col-sm-2">
+                                    <input type="text" class="form-control bg-light border-0 col-6" placeholder="Street" style="height: 55px;" name="street" id="street" >
+                                </div>
+                                <div class="col-12 col-sm-2">
+                                    <input type="text" class="form-control bg-light border-0 col-6" placeholder="City" style="height: 55px;" name="city" id="city">
+                                </div>
+                                <div class="col-12 col-sm-3">
+                                    <input type="text" class="form-control bg-light border-0 col-6" placeholder="Country" style="height: 55px;" name="country" id="country">
+                                  
+                                </div>
+                                <div class="col-12 col-sm-2" id="label">
+                                    <label  class="col-sm-6 col-form-label" for="patientname" style="text-align: left; height: 55px; padding-top: 14px;" >Gender </label>
+                                </div>
+                                <div class="col-8 col-sm-4" id="gender">
+                                    <label class="form-control bg-light border-0 col-6" id="gender2" >
+                                        <input class="form-check-input" id="males" type="radio" name="gender" value="M" required><label for="males" id="male" >Male</label> 
+                                        <input class="form-check-input" id="females" type="radio" name="gender"  value="F" ><label for="females"> Female </label>
+                                      </label>
+                               </div>
+                            <div></div>
+                                <div class="col-12 text-center">
+                                     <input type="submit" class="btn  btn-primary w-50 py-3" name="savebtn" id="savebtn" value="Register">
+                                </div>
+                                <div class="col-12 text-center">
+                                    <a class="link w-50 py-3" href="login.html" type="submit" style="text-decoration: revert;"> Are you have account? </a>
+                               </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>                     
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>  
+    <script src="js/main.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/vaild.js"></script>  
+
+
+</body>
+
+</html>

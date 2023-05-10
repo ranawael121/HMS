@@ -1,0 +1,50 @@
+.div-mother {
+    width: 100%;
+    margin-left: 8%;
+}
+
+.div1 {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+}
+
+table.scrolldown {
+    border-spacing: 0;
+    border-bottom: .5px solid black;
+    font-size: 18px;
+}
+
+table.scrolldown tbody,
+table.scrolldown thead {
+    display: block;
+}
+
+thead tr th {
+    height: 10px;
+    line-height: 20px;
+    color: white;
+}
+
+table tbody {
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+tbody td,
+thead th {
+    width: 200px;
+    border-right: 1px solid white;
+}
+
+td,
+tr {
+    text-align: center;
+}
+
+.doctor
+{
+    width: 50%;
+}

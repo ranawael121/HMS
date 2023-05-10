@@ -1,0 +1,3 @@
+function addCode() {
+     document.getElementById("add_to_me").innerHTML +=
+     "<div class='mb-3 row' id='add_to_me'><div class='col-sm-3 schdule'><span class='labelInput'><label >Date</label><input type='date' class='form-control bg-white border-0' name='dayDate[]'style='height: 55px;  margin: 5px;'></span></span></div><div class='col-sm-3 schdule'><span class='labelInput'><label >Start</label><input type='time' class='form-control bg-white border-0' name='start[]'style='height: 55px;  margin: 5px;'></span></div><div class='col-sm-3 schdule'><span class='labelInput'><label for='date'>End</label><input type='time' class='form-control bg-white border-0' name='end[]'style='height: 55px;  margin: 5px;'></span></div></div></div>'"};

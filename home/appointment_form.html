@@ -1,0 +1,261 @@
+<?php 
+   include("php/onlineappointment.php");
+?>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Book Appointment </title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet">
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="img/logo.png">
+
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+    $('#department').on('change', function(){
+        var depID = $(this).val();
+        if(depID){
+            $.ajax({
+                type:'GET',
+                url:'getDepDoctors.php',
+                data:'depId='+depID,
+                success:function(html){
+                    $('#doctorName').html(html);
+                    // $('#city').html('<option value="">Select state first</option>'); 
+                }
+            }); 
+        }else{
+            $('#doctorName').html('<option value="">Select Department first</option>');
+            // $('#city').html('<option value="">Select state first</option>'); 
+        }
+    });})
+  </script>
+
+</head>
+
+<body>
+
+
+
+    <!-- Navbar Start -->
+    <div class="container-fluid sticky-top bg-white shadow-sm">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
+                <a href="index.html" class="navbar-brand"> <img src="./img/logo.png" alt=""> </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0">
+                        <a href="index.html" class="nav-item nav-link ">Home</a>
+                        <a href="about.html" class="nav-item nav-link">About</a>
+                        <a href="appointment.html" class="nav-item nav-link active ">Appointment</a> 
+                        <a href="registedAppointment.html" class="nav-item nav-link">State Track</a>  
+   
+                        <!-- <a href="contact.html" class="nav-item nav-link">Contact</a> -->
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+
+   
+    <div class="container bg-primary my-5 py-5" id="appointment">
+        <div class="container py-5">
+            <div class="row gx-5 justify-content-center">
+               
+                <div class="col-lg-8 ">
+                    <div class="bg-white text-center rounded p-5">
+                        <h1 class="mb-4">Appointment</h1>
+                        <form method="post">
+                            <div class="row g-3">
+                                
+                               <div class="col-12 col-sm-2" id="label">
+                                <label  class="col-sm-6 col-form-label" for="patientname" style="text-align: left; height: 55px; padding-top: 14px;" >Name</label>
+                                </div>
+                                <div class="col-12 col-sm-9" >
+
+                                      <!-- <label  class="form-control bg-light border-0" for="patientname" style="text-align: left; height: 55px; padding-top: 14px;" >Patient Name: </label> -->
+                                         <?php setPatientName(); ?> 
+                                        <!-- <input type="text" class="form-control bg-light border-0" placeholder="Your Name" style="height: 55px;" name="patientName"> -->
+                                    </div>
+                                    <div class="col-12 col-sm-2" id="label">
+                                        <label  class="col-sm-6 col-form-label" for="patientname" style="text-align: left; height: 55px; padding-top: 14px;" >National Id </label>
+                                         </div>
+                                <div class="col-12 col-sm-9">
+                                    <!-- <label  class="form-control bg-light border-0" for="patientid" style="text-align: left; height: 55px; padding-top: 14px;" >Patient Id: </label> -->
+                                    <?php setPatientId();?>
+                                    <!-- <input type="number" class="form-control bg-light border-0" placeholder="Your Id" style="height: 55px;" name="national_id"> -->
+                                </div>
+                                <div class="col-12 col-sm-2"id="label" >
+                                    <label  class="col-sm-6 col-form-label" for="patientname" style="text-align: left; height: 55px; padding-top: 14px;" >Department </label>
+                                     </div>
+
+                                <div class="col-12 col-sm-9">
+                                    <select name="department" class="form-select bg-light border-0"  style="height: 55px;" id="department" required>
+                                     <option>Select Department</option>
+                                     <?php  if (mysqli_num_rows($depresult) > 0) {
+                                        // output data of each row
+                                        while($row = mysqli_fetch_assoc($depresult)) {?>
+                                      <option value=<?php echo $row['id'] ;?>>
+                                        <?php echo $row["name"] ;?>
+                                      </option>;
+                                      <?php }
+                                      } ?>
+                                    </select> 
+                             </div>
+                        
+                                <div class="col-12 col-sm-2"id="label" >
+                                    <label  class="col-sm-6 col-form-label" for="patientname" style="text-align: left; height: 55px; padding-top: 14px;" >Doctor Name </label>
+                                     </div>
+                                <div class="col-12 col-sm-9">
+                                    <select name="doctorName" id="doctorName" class="form-select bg-light border-0" style="height: 55px;" placeholder="Doctor" required>
+                                    <!-- <option>Select Doctor</option>
+                                    <?php  if (mysqli_num_rows($docresult) > 0) {
+                                      // output data of each row
+                                      while($row = mysqli_fetch_assoc($docresult)) {?>
+                                    <option value=<?php echo $row['national_id'] ;?>>
+                                      <?php echo $row["name"] ;?>
+                                    </option>;
+                                    <?php }
+                                    } ?> -->
+                                </select>
+                                </div>
+         
+
+                             <div class="col-12 col-sm-2" id="label" >
+                                <label  class="col-sm-6 col-form-label" for="patientname" style="text-align: left; height: 55px; padding-top: 14px;" >Examination </label>
+                                 </div>
+                             <div class="col-12 col-sm-9">
+                                <select name="consultationt" class="form-select bg-light border-0"  style="height: 55px;" id="">
+                                 <option value="examination">Examination</option>
+                                 <option value="re-examination">Re-examination</option>                                               
+                                </select> 
+                         </div>
+                                
+                         <div class="col-12 col-sm-2" id="label" >
+                            <label  class="col-sm-6 col-form-label" for="patientname" style="text-align: left; height: 55px; padding-top: 14px;" >Date </label>
+                             </div>
+                                <div class="col-12 col-sm-9">
+                                    <!--<div class="date" id="date" data-target-input="nearest">
+                                        <input type="datetime-local"
+                                            class="form-control bg-light border-0 datetimepicker-input"
+                                             data-target="#date" data-toggle="datetimepicker" style="height: 55px;" name="datetime" id="inputdate">
+                                    </div>-->
+
+                                    <input type="datetime-local" name="datetime" id="myDatetimeLocal" style="height: 55px;" class="form-control bg-light border-0 datetimepicker-input" required>
+
+                                    <script>
+                                      const inputField = document.getElementById("myDatetimeLocal");
+                                    
+                                      inputField.min = new Date().toISOString().slice(0, 16);
+                                    </script>
+                                </div>
+                       
+                                
+                                <div class="d-grid gap-2 col-6 mx-auto">
+                                    <input type="submit" class="btn btn-primary w-100 py-3" name="savebtn" value="Book">   
+                               </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+ 
+    <div class="container-fluid bg-dark text-light mt-5 " id="footer">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6" style="margin-top: 1rem !important;">
+                    <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">To Contact</h4>
+                    <p class="mb-4"><i class="fa fa-map-marker-alt text-primary me-3"></i>Taha Hussein Street, Alminya, Egypt</p>
+                    <p class="mb-4"><i class="fa fa-envelope text-primary me-3"></i>HMS@outlook.com</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt text-primary me-3"></i>01234567890</p>
+                </div>
+                <div class="col-lg-3 col-md-6" style="margin-top: 1rem !important;">
+                    <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">Quick Links</h4>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-light mb-4" href="index.html"><i class="fa fa-angle-right me-2"></i>Home</a>
+                        <a class="text-light mb-4" href="about.html"><i class="fa fa-angle-right me-2"></i>About</a>
+                        <a class="text-light mb-4" href="appointment.html"><i class="fa fa-angle-right me-2"></i>Appointment</a>
+                        </div>
+                </div>
+                <div class="col-lg-3 col-md-6" style="margin-top: 1rem !important;">
+                    <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">Popular Links</h4>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-light mb-4" href="index.html"><i class="fa fa-angle-right me-2"></i>Home</a>
+                        <a class="text-light mb-4" href="about.html"><i class="fa fa-angle-right me-2"></i>About</a>
+                        <a class="text-light mb-4" href="appointment.html"><i class="fa fa-angle-right me-2"></i>Appointment</a>
+                     </div>
+                </div>
+                <div class="col-lg-3 col-md-6" style="margin-top: 1rem !important;">
+                    <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">Our Social Networks</h4>
+                        <div class="input-group">
+                           <p class="text-light mb-4" style="margin-bottom: .5rem !important;">If you wanted to follow us you can look at the following links  </p>
+                        </div>
+                    <h6 class="text-primary text-uppercase mt-4 mb-3" style="margin-top: .5rem !important;">Follow Us</h6>
+                    <div class="d-flex">
+                        <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-lg btn-primary btn-lg-square rounded-circle" href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+ <!-- Footer End -->
+<script src="js/jquery.js"></script>
+<!--<script src="js/main.js"></script>-->
+
+<script src="js/vaild.js"></script>
+
+
+ 
+   
+    <!---- <script>
+    //      var dep = document.getElementById('department').value;
+    //      var select = document.getElementById("doctorName") 
+    //     function dependentDoctorOnDepartment(){
+    //         fetch('getDepDcotors.php?depId='+dep)
+    //             .then((response) => response.json())
+    //             .then((data) => { 
+    //                 console.log(data);
+    //                 // for (var i=0; i<data.length; i++) { 
+    //                 //     newOption = document.createElement("option"); 
+    //                 //     newOption.value = data[i];  // assumes option string and value are the same 
+    //                 //     newOption.text=data[i]; 
+    //                 //     select.add(newOption);}
+    //              });
+    //     }
+    // </script> -->
+</body>
+
+</html>

@@ -1,0 +1,233 @@
+<?php 
+session_start();
+if(isset( $_SESSION['NId']) && $_SESSION['userType']!='patient'  ){ 
+?>
+<?php 
+   include("prescUpdate.php");
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../generalView.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet" />
+    <title>Prescription Form</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="../Doctor/Doctor.css">
+    <link rel="icon" type="image/png" href="logo.png">
+
+</head>
+
+<body>
+
+    <!-- navbar -->
+    <div class="container-fluid sticky-top bg-white shadow-sm">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
+                <a href="prescUpdateForm.html" class="navbar-brand">
+                    <img src="logo.png" alt=""> </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0">
+                        <?php 
+                        if(  $_SESSION['userType']=='admin'  ){   ?>
+                        <a href="../dashbord/index.html" class="nav-item nav-link">Home</a>
+                        <a href="../Doctor/Doctor.html" class="nav-item nav-link">Doctor</a>
+                        <?php }else if ($_SESSION['userType']==='doctor'){?>
+                          <a href="../dashbord/docDashbord.html" class="nav-item nav-link">Home</a>
+                          <?php }else{  ?>
+                            <a href="../dashbord/recepDashbord.html" class="nav-item nav-link">Home</a>
+                          <?php } ?>
+                          
+                            <a href="../schedule/schedule.html" class="nav-item nav-link">Schedule</a>
+                         <a href="../Patient/Patient.html" class="nav-item nav-link">Patient</a>
+                        <a href="../appointment/appointmentList.html" class="nav-item nav-link ">Appoinment</a>
+                        <a href="../prsecription/prescriptionList.html" class="nav-item nav-link active">Prescription</a>
+                        <div>
+                            <!-- <label for="user" class="nav-item nav-link" style="color:#6c757d">username</label> -->
+                            <div  class="nav-link" style="font-size: 15px;width: fit-content;font-weight: 500; color:#6c757d"><?php echo $_SESSION['userName'].' '.'('.$_SESSION['userType'].')'; ?></div>
+  
+                        </div>
+                          <a href="../authLog/logout.php" class="nav-item nav-link"><i class="bi bi-box-arrow-right"></i></a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Appointment form -->
+
+    <div class="container mt-5">
+        <div class="row form bg-light  rounded p-5">
+            <?php if (isset($_GET['done'])) { ?>
+                <span class="alert alert-success" role="alert" style="text-align: center;display:inline" >
+                  <?=$_GET['done']?>
+                </span>
+              <?php } ?>
+            <h1 class="mb-4 text-center">Prescription</h3>
+                <div class="row g-3">
+                    <form action="" method="post" name="presc">
+                        <div class="row g-3">
+
+                            <div class=" d-flex justify-content-end">
+                                <button type="button" class="btn" style="background-color: #42b3e5;">
+                                    <a href="prescriptionList.html" style="text-decoration: none; color: white;">
+                                        <i class="bi bi-bag-plus-fill"></i>
+                                    </a>
+                                </button>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <span class="labelInput"> 
+                                <label for="patientname">Patient Name</label>
+                                <input type="text" class="form-control bg-grey border-0" style="height: 55px;"
+                                    id="patientname" name="patientname" value="<?php echo $RAdata['patienName'] ?>"
+                                    readonly>
+                                </span>
+                                <br>
+                            </div>
+
+                            <div class="col-12 col-sm-6">
+                                <span class="labelInput"> 
+                                <label for="patientage">Patient Age</label>
+                                <input type="text" class="form-control bg-grey border-0" style="height: 55px;"
+                                    id="patientage" name="patientage" value="<?php echo $age ?>" readonly>
+                                </span>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <span class="labelInput">
+                                    <label for="Department">Department</label>
+                                    <input type="text" class="form-control bg-grey border-0" style="height: 55px;"
+                                        id="Department" name="Department" value="<?php echo $RAdata['departmentName'] ?>"
+                                        readonly>
+                                    </span>
+                                    <br>
+                                </div>    
+                            <div class="col-12 col-sm-6">
+                                <span class="labelInput"> 
+                                <label for="Doctor">Doctor</label>
+                                <input type="text" class="form-control bg-grey border-0" style="height: 55px;"
+                                    id="Doctor" name="Doctor" value="<?php echo $RAdata['doctorName'] ?>" readonly>
+                            </span>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <span class="labelInput"> 
+                                    <label for="PrescriptionDate">Prescription Date</label>
+                                    <input type="datetime-local" class="form-control bg-grey border-0"
+                                        style="height: 55px; background-color: #e9ecef;" id="PrescriptionDate" name="PrescriptionDate"
+                                        value="<?php echo $data['prescription_time'] ?>">
+                                        </span>
+                                        <br>
+                                </div>
+
+                                                           
+                           
+                            <div class="col-12 col-sm-">
+                                <label for="Disease">Disease</label>
+                                <input type="text" class="form-control bg-grey border-0" style="height: 55px; background-color: #e9ecef;"
+                                    id="Disease" name="disease" value="<?php echo $data['disease'] ?>"
+                                    style="width: 830px;">
+                                    <br>
+                            </div>
+
+                            <div class="col-12 col-sm-">
+                                <label for="MedicalTest">Medical Test</label>
+                                <input type="text" class="form-control bg-grey border-0" style="height: 55px; background-color: #e9ecef;"
+                                    id="MedicalTest" name="medicalTest" value="<?php echo $data['medical_test'] ?>"
+                                    style="width: 830px;">
+<br>
+                                </div>
+
+                            <div class="col-12 col-sm-">
+                                <label for="xrays">x-rays:</label>
+                                <input type="text" class="form-control bg-grey border-0" style="height: 55px; background-color: #e9ecef;"
+                                    id="xrays" name="xrays" value="<?php echo $data['x_rays'] ?>" style="width: 830px;">
+                                    <br>
+
+                                </div>
+
+                            <form id='test' method="post">
+
+                                <div class="table-responsive">
+                                    <table id="form_table" class="table table-bordered " style="width: 100%;">
+                                        <thead style="background-color: #42b3e5;">
+                                            <tr>
+                                                <!-- <th>No</th> -->
+                                                <th>Medicine Name</th>
+                                                <th>Dosage</th>
+                                                <th>comment</th>
+                                                <th>Allow Substitution</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                        drawPrescriptionLine();?>
+                                        </tbody>
+                                    </table>
+                                    <div class="col-12 col-sm-6">
+                                        <button type="button" class='btn btn-success addmore border-0'
+                                            style="background-color: #42b3e5;">add new </button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <footer class="row g-3">
+                                <div class="col-12 col-sm-6">
+                                    <span class="labelInput">
+                                    <label for="follwdate">Follw-up Date</label>
+                                    <input type="datetime-local" id="follwdate" name="follwdate"
+                                        value="<?php echo $data['followup_date'] ?>"
+                                        class="form-control border-0" placeholder="Date Time"
+                                        style="height: 55px; background-color: #e9ecef;"><br>
+                                    </span>
+                                    </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <span class="labelInput">
+                                    <label for="notes">Notes</label>
+                                    <input type="text" id="notes" name="notes" value="<?php echo $data['notes'] ?>"
+                                        class="form-control border-0" placeholder="Notes"
+                                        style="height: 55px; background-color: #e9ecef;">
+                                    </span>
+                                    <br>
+                                </div>
+
+                            </footer>
+                            <div class="col-12 col-sm-6 text-center">
+                                <button class="discard btn-light border-1 border border-secondary btn w-50 py-3">
+                                    <a href="prescriptionList.html" class="text-decoration-none"  style="color: #6c757d;">Discard</a>
+                                </button>
+                            </div>
+                            <div class="col-12 col-sm-6 text-center">
+                               <?php if(  $_SESSION['userType']!='receptionist' ){ ?>
+                                <input type="submit" value="Update" name="savebtn" class="btn w-50 py-3"  style="background-color: #42b3e5; color: white;"/>
+                               <?php } ?>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+        </div>
+    </div>
+    <script src="../Doctor/bootstrap.bundle.min.js"></script>
+        <script src="JS.js"></script>
+        <?php if (isset($_GET['state'])) { ?>
+        <script>
+         var f = document.forms['presc'];
+            for(var i=0,fLen=f.length;i<fLen;i++){
+                f.elements[i].readOnly = true;  }
+            </script>
+            <?php } ?>
+</body>
+
+</html>
+<?php } else{
+    header("Location: ../login.html?acesserror=Access Denied Please Log In");
+  } ?>
